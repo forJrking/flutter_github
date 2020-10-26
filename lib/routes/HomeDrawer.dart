@@ -47,7 +47,7 @@ class HomeDrawer extends StatelessWidget {
                     Padding(
                         padding: EdgeInsets.only(left: 16),
                         child: Text(
-                          value.isLogin ? value.user.name : "登录",
+                          value.isLogin ? value.user.name??"" : "登录",
                           style: TextStyle(
                               fontSize: 18,
                               color: Colors.white,

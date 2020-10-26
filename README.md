@@ -1,31 +1,30 @@
 # Github Client
 
 ### Flutter Github Client 项目需求
+
+<img src="https://cdn.jsdelivr.net/gh/forJrking/maven/1603710073815-iShot2020-10-26%2018.59.11.gif" style="zoom:50%;" />
+
 1. 实现Github账号登录、退出登录功能
 2. 登录后可以查看自己的项目主页
 3. 支持换肤
-4. 支持多语言
-5. 登录状态可以持久化；
+4. 登录状态可以持久化；
 
 ### 技术选型
 - 登录等需要网络使用 dio
 - 持久化使用share_preference
-- 语言\主题\登录 全局状态共享
-- Intl包的使用支持国际化
+- 主题\登录 全局状态共享
 
 ### 项目结构
  ```
  github_client
  ├── android
  ├── fonts
- ├── i18n
  ├── images
  ├── ios
  └── lib
      ├── common
      ├── net
      ├── util
-     ├── i18n
      ├── models
      ├── states
      ├── routes
