@@ -12,11 +12,10 @@ import 'package:flutter_demo/models/repo.dart';
 var dio = Dio(BaseOptions(
     baseUrl: 'https://api.github.com/',
     headers: {
-      HttpHeaders.acceptHeader: "application/vnd.github.squirrel-girl-preview,"
-          "application/vnd.github.symmetra-preview+json",
+      HttpHeaders.acceptHeader: "application/vnd.github.v3+json",
     },
     receiveTimeout: 15 * 1000,
-    connectTimeout: 5 * 1000,
+    connectTimeout: 15 * 1000,
     sendTimeout: 10 * 1000));
 
 class GitNet {
@@ -30,21 +29,22 @@ class GitNet {
   static init() {
     //缓存拦截器
     dio.interceptors.add(Global.netCache);
+    dio.interceptors.add(LogInterceptor(responseBody: true)); //开启请求日志
     //登录授权
     dio.options.headers[HttpHeaders.authorizationHeader] =
         Global.profile?.token;
     //证书处理
-    if (!Global.isRelease) {
-      (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
-          (client) {
-        client.findProxy = (uri) {
-          return "PROXY 10.1.10.250:8888";
-        };
-//代理工具会提供一个抓包的自签名证书，会通不过证书校验，所以我们禁用证书校验
-        client.badCertificateCallback =
-            (X509Certificate cert, String host, int port) => true;
-      };
-    }
+//     if (!Global.isRelease) {
+//       (dio.httpClientAdapter as DefaultHttpClientAdapter).onHttpClientCreate =
+//           (client) {
+//         client.findProxy = (uri) {
+//           return "PROXY 10.1.10.250:8888";
+//         };
+// //代理工具会提供一个抓包的自签名证书，会通不过证书校验，所以我们禁用证书校验
+//         client.badCertificateCallback =
+//             (X509Certificate cert, String host, int port) => true;
+//       };
+//     }
   }
 
   Future<UserInfo> login(String login, String pwd) async {
@@ -52,9 +52,7 @@ class GitNet {
 
     var response = await dio.get(
       "/users/$login",
-      options: _options.merge(headers: {
-        HttpHeaders.authorizationHeader: basic
-      }, extra: {
+      options: _options.merge(extra: {
         "noCache": true, //本接口禁用缓存
       }),
     );

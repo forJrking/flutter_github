@@ -63,7 +63,10 @@ class _HomeRouteState extends State<HomeRoute> {
           return GestureDetector(
             child: RepoItem(list[index]),
             onTap: () => Navigator.of(context).pushNamed(RoutePages.browser,
-                arguments: (list[index].html_url)),
+                arguments: <int, String>{
+                  0: (list[index].html_url),
+                  1: (list[index]?.name ?? "")
+                }),
           );
         },
       );

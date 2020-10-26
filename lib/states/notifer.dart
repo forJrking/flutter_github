@@ -32,8 +32,8 @@ class UserModel extends ProfileNotifier {
 
 class ThemeModel extends ProfileNotifier {
   ColorSwatch get theme =>
-      Global.themes.firstWhere((element) => element.value == _profile.theme,
-          orElse: () => Global.themes.first);
+      Global.themes.firstWhere((element) => (element[500].value == _profile.theme),
+          orElse: () => Global.themes.last);
 
   set theme(ColorSwatch color) {
     if (color != this.theme) {

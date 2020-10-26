@@ -17,6 +17,6 @@ class RoutePages {
         home: (context) => HomeRoute(),
         theme: (context) => ThemeRoute(),
         // language: (context) => LanguageRoute(),
-        browser: (context) => Browser(),
+        browser: (context) => Browser(map: ModalRoute.of(context).settings.arguments,),
       };
 }

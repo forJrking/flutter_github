@@ -4,14 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 
 class Browser extends StatefulWidget {
-  const Browser({Key key, this.url, this.title}) : super(key: key);
-
-  final String url;
-  final String title;
+  const Browser({Key key, this.map}) : super(key: key);
+  final Map<dynamic, dynamic> map;
 
   @override
   WebViewExampleState createState() =>
-      WebViewExampleState(url: this.url, title: this.title);
+      WebViewExampleState(url: map[0], title: map[1]);
 }
 
 class WebViewExampleState extends State<Browser> {
@@ -31,11 +29,11 @@ class WebViewExampleState extends State<Browser> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(this.title??""),
+          title: Text(this.title ?? ""),
           centerTitle: true,
         ),
         body: WebView(
-          initialUrl: this.url??"https://www.baidu.com",
+          initialUrl: this.url ?? "https://www.baidu.com",
         ));
   }
 }

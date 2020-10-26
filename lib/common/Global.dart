@@ -33,24 +33,24 @@ class Global {
   static bool get isRelease => bool.fromEnvironment("dart.vm.product");
 
   static Future init() async {
+    WidgetsFlutterBinding.ensureInitialized();
     try {
-      SharedPreferences.setMockInitialValues({});
       _prefs = await SharedPreferences.getInstance();
       var jsonString = _prefs.getString(_key_profile);
       if (jsonString != null) {
         profile = Profile.fromJson(json.decode(jsonString));
       }
-
-      //缓存策略
-      profile.cache = profile.cache ?? CacheConfig()
-        ..maxAge = 3600
-        ..enable = true
-        ..maxCount = 100;
-      //网络库初始化
-      GitNet.init();
+      print("历史存储$jsonString");
     } catch (e) {
       print(e);
     }
+    //缓存策略
+    profile.cache = profile.cache ?? CacheConfig()
+      ..maxAge = 3600
+      ..enable = true
+      ..maxCount = 100;
+    //网络库初始化
+    GitNet.init();
   }
 
   // 持久化Profile信息

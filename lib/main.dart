@@ -13,7 +13,9 @@ void main() {
   //平台工具
   debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
   //初始化
-  Global.init().then((value) => runApp(new MyApp()));
+  Global.init().then((value) => runApp(new MyApp())).catchError((e) {
+    print(e);
+  });
 }
 
 //下面是界面

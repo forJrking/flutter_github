@@ -37,7 +37,7 @@ dependencies:
   #toast 通知提示库
   bot_toast: ^3.0.4
   #存储
-  shared_preferences: ^0.5.12
+  shared_preferences: ^0.5.12+2
   #国际化
   intl: ^0.15.7
   #带缓存的网络加载

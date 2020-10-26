@@ -133,9 +133,9 @@ class Repo {
     _size = json["size"];
     _defaultBranch = json["defaultBranch"];
     _openIssuesCount = json["open_issues_count"];
-    _pushedAt = json["pushedAt"];
-    _createdAt = json["createdAt"];
-    _updatedAt = json["updatedAt"];
+    _pushedAt = json["pushed_at"];
+    _createdAt = json["created_at"];
+    _updatedAt = json["updated_at"];
     _subscribersCount = json["subscribers_count"];
     _license =
         json["license"] != null ? License.fromJson(json["license"]) : null;
@@ -159,9 +159,9 @@ class Repo {
     map["size"] = _size;
     map["defaultBranch"] = _defaultBranch;
     map["open_issues_count"] = _openIssuesCount;
-    map["pushedAt"] = _pushedAt;
-    map["createdAt"] = _createdAt;
-    map["updatedAt"] = _updatedAt;
+    map["pushed_at"] = _pushedAt;
+    map["created_at"] = _createdAt;
+    map["updated_at"] = _updatedAt;
     map["subscribers_count"] = _subscribersCount;
     if (_license != null) {
       map["license"] = _license.toJson();

@@ -41,7 +41,7 @@ class _RepoItemState extends State<RepoItem> {
                     child: Padding(
                       padding: EdgeInsets.only(left: 16),
                       child: Text(
-                        widget.repo?.owner?.updated_at ?? "",
+                        widget.repo?.updatedAt?? "",
                         textScaleFactor: .9,
                       ),
                     ),
@@ -56,9 +56,7 @@ class _RepoItemState extends State<RepoItem> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.repo.fork
-                        ? widget.repo?.fullName
-                        : widget.repo?.name,
+                    widget.repo?.name??(widget.repo?.fullName??""),
                     style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 15,
@@ -101,7 +99,7 @@ class _RepoItemState extends State<RepoItem> {
                 Icon(Icons.info_rounded),
                 Text(
                     " ${widget.repo.openIssuesCount.toString().padRight(width)}"),
-                Icon(Icons.whatshot_outlined),
+                Icon(Icons.whatshot),
                 Text(" ${widget.repo.forksCount.toString().padRight(width)}")
               ];
 
