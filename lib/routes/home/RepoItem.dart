@@ -16,9 +16,7 @@ class RepoItem extends StatefulWidget {
 class _RepoItemState extends State<RepoItem> {
   @override
   Widget build(BuildContext context) {
-    var subtitle;
-
-    return Padding(
+    return Container(
       padding: EdgeInsets.only(top: 8),
       child: Material(
         color: Colors.white,
@@ -32,7 +30,7 @@ class _RepoItemState extends State<RepoItem> {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
+              padding: EdgeInsets.only(top: 5, left: 16, right: 16),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
@@ -42,16 +40,86 @@ class _RepoItemState extends State<RepoItem> {
                     flex: 1,
                     child: Padding(
                       padding: EdgeInsets.only(left: 16),
-                      child: Text(widget.repo.owner?.name),
+                      child: Text(
+                        widget.repo?.owner?.updated_at ?? "",
+                        textScaleFactor: .9,
+                      ),
                     ),
                   ),
-                  Text(widget.repo.language)
+                  Text(widget.repo?.language ?? "未知"),
                 ],
               ),
-            )
+            ),
+            Padding(
+              padding: EdgeInsets.only(top: 8, bottom: 8, left: 16, right: 16),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.repo.fork
+                        ? widget.repo?.fullName
+                        : widget.repo?.name,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                        fontStyle: widget.repo.fork
+                            ? FontStyle.italic
+                            : FontStyle.normal),
+                  ),
+                  Text(
+                    widget.repo.description ?? "仓库没有添加描述",
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      height: 1.15,
+                      color: Colors.blueGrey[700],
+                      fontSize: 12,
+                    ),
+                  )
+                ],
+              ),
+            ),
+            _buildBottom(),
           ],
         ),
       ),
     );
+  }
+
+  Widget _buildBottom() {
+    return IconTheme(
+        data: IconThemeData(color: Colors.grey[700], size: 15),
+        child: DefaultTextStyle(
+          style: TextStyle(color: Colors.grey[700], fontSize: 12),
+          child: Builder(
+            builder: (context) {
+              var width = 9; //间距
+              var children = <Widget>[
+                Icon(Icons.star),
+                Text(
+                    " ${widget.repo.stargazersCount.toString().padRight(width)}"),
+                Icon(Icons.info_rounded),
+                Text(
+                    " ${widget.repo.openIssuesCount.toString().padRight(width)}"),
+                Icon(Icons.whatshot_outlined),
+                Text(" ${widget.repo.forksCount.toString().padRight(width)}")
+              ];
+
+              if (widget.repo.fork) {
+                children.add(Text(" forked".padRight(width)));
+              }
+              //私有仓库
+              if (widget.repo.private) {
+                children.add(Icon(Icons.lock_rounded));
+                children.add(Text(" private".padRight(width)));
+              }
+              return Padding(
+                  padding: EdgeInsets.only(left: 16, bottom: 8, right: 12),
+                  child: Row(
+                    children: children,
+                  ));
+            },
+          ),
+        ));
   }
 }

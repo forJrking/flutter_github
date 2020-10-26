@@ -31,11 +31,11 @@ class WebViewExampleState extends State<Browser> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(this.title),
+          title: Text(this.title??""),
           centerTitle: true,
         ),
         body: WebView(
-          initialUrl: this.url,
+          initialUrl: this.url??"https://www.baidu.com",
         ));
   }
 }

@@ -9,9 +9,7 @@ class ProfileNotifier extends ChangeNotifier {
 
   @override
   void notifyListeners() {
-    Global.saveProfile().then((value) => {print("更新数据成功")}, onError: (e) {
-      print(e);
-    });
+    Global.saveProfile().then((value) => print("ok"), onError: (e) {});
     super.notifyListeners();
   }
 }
@@ -25,15 +23,14 @@ class UserModel extends ProfileNotifier {
   set user(UserInfo userInfo) {
     if (userInfo?.login != _profile.user?.login) {
       _profile.lastLogin = _profile.user?.login;
-      _profile.user = user;
+      //此处赋值数据给错 导致调试一直有问题
+      _profile.user = userInfo;
       notifyListeners();
     }
   }
 }
 
 class ThemeModel extends ProfileNotifier {
-
-
   ColorSwatch get theme =>
       Global.themes.firstWhere((element) => element.value == _profile.theme,
           orElse: () => Global.themes.first);

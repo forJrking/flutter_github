@@ -24,6 +24,7 @@ class Repo {
   int _id;
   String _name;
   String _fullName;
+  String _html_url;
   UserInfo _owner;
   bool _private;
   String _description;
@@ -45,6 +46,7 @@ class Repo {
   String get name => _name;
 
   String get fullName => _fullName;
+  String get html_url => _html_url;
 
   UserInfo get owner => _owner;
 
@@ -120,20 +122,21 @@ class Repo {
     _id = json["id"];
     _name = json["name"];
     _fullName = json["fullName"];
+    _html_url = json["html_url"];
     _owner = json["owner"]!= null ? UserInfo.fromJson(json["owner"]) : null;
     _private = json["private"];
     _description = json["description"];
     _fork = json["fork"];
     _language = json["language"];
-    _forksCount = json["forksCount"];
-    _stargazersCount = json["stargazersCount"];
+    _forksCount = json["forks_count"];
+    _stargazersCount = json["stargazers_count"];
     _size = json["size"];
     _defaultBranch = json["defaultBranch"];
-    _openIssuesCount = json["openIssuesCount"];
+    _openIssuesCount = json["open_issues_count"];
     _pushedAt = json["pushedAt"];
     _createdAt = json["createdAt"];
     _updatedAt = json["updatedAt"];
-    _subscribersCount = json["subscribersCount"];
+    _subscribersCount = json["subscribers_count"];
     _license =
         json["license"] != null ? License.fromJson(json["license"]) : null;
   }
@@ -143,6 +146,7 @@ class Repo {
     map["id"] = _id;
     map["name"] = _name;
     map["fullName"] = _fullName;
+    map["html_url"] = _html_url;
     if (_owner != null) {
       map["owner"]  = _owner.toJson();
     }
@@ -150,15 +154,15 @@ class Repo {
     map["description"] = _description;
     map["fork"] = _fork;
     map["language"] = _language;
-    map["forksCount"] = _forksCount;
-    map["stargazersCount"] = _stargazersCount;
+    map["forks_count"] = _forksCount;
+    map["stargazers_count"] = _stargazersCount;
     map["size"] = _size;
     map["defaultBranch"] = _defaultBranch;
-    map["openIssuesCount"] = _openIssuesCount;
+    map["open_issues_count"] = _openIssuesCount;
     map["pushedAt"] = _pushedAt;
     map["createdAt"] = _createdAt;
     map["updatedAt"] = _updatedAt;
-    map["subscribersCount"] = _subscribersCount;
+    map["subscribers_count"] = _subscribersCount;
     if (_license != null) {
       map["license"] = _license.toJson();
     }

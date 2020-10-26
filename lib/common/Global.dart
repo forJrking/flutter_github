@@ -34,6 +34,7 @@ class Global {
 
   static Future init() async {
     try {
+      SharedPreferences.setMockInitialValues({});
       _prefs = await SharedPreferences.getInstance();
       var jsonString = _prefs.getString(_key_profile);
       if (jsonString != null) {
@@ -54,7 +55,8 @@ class Global {
 
   // 持久化Profile信息
   static Future saveProfile() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString(_key_profile, jsonEncode(profile.toJson()));
+    _prefs ??= await SharedPreferences.getInstance();
+    _prefs.setString(_key_profile, jsonEncode(profile.toJson()));
+    print("更新数据成功 $_prefs");
   }
 }

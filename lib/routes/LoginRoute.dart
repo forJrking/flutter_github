@@ -15,7 +15,7 @@ class LoginRoute extends StatefulWidget {
 class _LoginRouteState extends State<LoginRoute> {
   TextEditingController _unameController = new TextEditingController();
   TextEditingController _pwdController = new TextEditingController();
-  bool pwdShow = false; //密码是否显示明文
+  bool pwdShow = true; //密码是否显示明文
   GlobalKey _formKey = new GlobalKey<FormState>();
   bool _nameAutoFocus = true;
 
@@ -23,8 +23,11 @@ class _LoginRouteState extends State<LoginRoute> {
   void initState() {
     _unameController.text = Global.profile.lastLogin;
     var text = _unameController.text;
-    if (text != null && text.toString().trim().length <= 0) {
+    if (text != null && text.isNotEmpty) {
+      //用户名有内容则定位到密码输入框
       _nameAutoFocus = false;
+    } else {
+      _nameAutoFocus = true;
     }
     super.initState();
   }
@@ -98,14 +101,16 @@ class _LoginRouteState extends State<LoginRoute> {
       showLoading(context, "登录中...");
       UserInfo userInfo;
       try {
+        print("开始登录");
         userInfo = await GitNet(context).login(login, pwd);
+        print("登录结果 ${userInfo.toJson()}");
         Provider.of<UserModel>(context, listen: false).user = userInfo;
       } catch (e) {
-        print(e);
-        if (e.response?.statusCode == 401) {
+        print("登录出错 ${e}");
+        if (e?.response?.statusCode == 401) {
           showToast("账户名或密码错误");
         } else {
-          showToast(e.toString());
+          showToast(e?.toString());
         }
       } finally {
         // 隐藏loading框

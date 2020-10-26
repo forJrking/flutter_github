@@ -58,9 +58,13 @@ class _HomeRouteState extends State<HomeRoute> {
           // 如果接口返回的数量等于'page_size'，则认为还有数据，反之则认为最后一页
           return data.length == 20;
         },
-        itemBuilder: (List list, int index, BuildContext ctx) {
+        itemBuilder: (List<Repo> list, int index, BuildContext ctx) {
           // 项目信息列表项
-          return RepoItem(list[index]);
+          return GestureDetector(
+            child: RepoItem(list[index]),
+            onTap: () => Navigator.of(context).pushNamed(RoutePages.browser,
+                arguments: (list[index].html_url)),
+          );
         },
       );
     }
