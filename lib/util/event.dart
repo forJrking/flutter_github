@@ -11,12 +11,12 @@ EventBus 全局事件总线管理
         title = event.num;
       });
     });
-    //注销
+
 */
 
 import 'package:event_bus/event_bus.dart';
 
-class NxEventBus extends EventBus{
+class NxEventBus {
 
   static NxEventBus get instance => _getInstance();
 
@@ -25,7 +25,13 @@ class NxEventBus extends EventBus{
 
   static NxEventBus _instance;
 
+  EventBus bus;
+
+  NxEventBus._internal() {
+    bus = new EventBus();
+  }
+
   static _getInstance() {
-    return _instance ??= new NxEventBus();
+    return _instance ??= new NxEventBus._internal();
   }
 }

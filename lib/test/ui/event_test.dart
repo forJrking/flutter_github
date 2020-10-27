@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_demo/currentRoute/currentRoute.dart';
 import 'package:flutter_demo/util/event.dart';
 
 ///
@@ -12,6 +13,7 @@ class EventHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      navigatorObservers: [CurrentRouteNavigatorObserver()],
       home: Receiver(),
     );
   }
@@ -34,7 +36,7 @@ class _ReceiverState extends State<Receiver> {
   @override
   void initState() {
     super.initState();
-    NxEventBus.instance.on<StringEvent>().listen((event) {
+    NxEventBus.instance.bus.on<StringEvent>().listen((event) {
       setState(() {
         title = event.num;
       });
@@ -44,7 +46,7 @@ class _ReceiverState extends State<Receiver> {
   @override
   void dispose() {
     super.dispose();
-    NxEventBus.instance.destroy();
+    NxEventBus.instance.bus.destroy();
   }
 
   @override
@@ -74,7 +76,7 @@ class Send extends StatelessWidget {
       child: RaisedButton(
         child: Text('发送'),
         onPressed: () {
-          NxEventBus().fire(StringEvent(Random().nextInt(100).toString()));
+          NxEventBus().bus.fire(StringEvent(Random().nextInt(100).toString()));
         },
       ),
     );
