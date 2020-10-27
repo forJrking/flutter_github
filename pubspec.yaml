@@ -44,6 +44,8 @@ dependencies:
   cached_network_image: ^2.3.3
   #listview
   flukit: ^1.0.2
+  #event_bus
+  event_bus: ^1.1.1
 
 dev_dependencies:
   flutter_test:
