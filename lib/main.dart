@@ -4,7 +4,7 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter_demo/common/RoutePages.dart';
 import 'package:flutter_demo/currentRoute/currentRoute.dart';
 import 'package:flutter_demo/states/notifer.dart';
-import 'package:flutter_demo/test/ui/event_test.dart';
+import 'package:flutter_demo/test/ui/map.dart';
 import 'package:flutter_demo/util/funs.dart';
 import 'package:provider/provider.dart';
 
@@ -15,7 +15,7 @@ void main() {
   //平台工具
   debugDefaultTargetPlatformOverride = TargetPlatform.iOS;
   //初始化
-  Global.init().then((value) => runApp(new MyApp())).catchError((e) {
+  Global.init().then((value) => runApp(new MapHome())).catchError((e) {
     print(e);
   });
 }
@@ -38,7 +38,10 @@ class MyApp extends StatelessWidget {
           navigatorKey: NavigationService.getInstance().navigatorKey,
           //路由辅助 用于没有context跳转
           builder: BotToastInit(),
-          navigatorObservers: [BotToastNavigatorObserver(),CurrentRouteNavigatorObserver()],
+          navigatorObservers: [
+            BotToastNavigatorObserver(),
+            CurrentRouteNavigatorObserver()
+          ],
           theme: ThemeData(
             //切换主题
             primarySwatch: themeModel.theme,
